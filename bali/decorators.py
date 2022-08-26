@@ -62,7 +62,8 @@ def compatible_method(func):
                         offset=request_data.get('offset'),
                     )
                     response_data = paginate(
-                        result, params=params, is_rpc=True
+                        result, params=params, is_rpc=True,
+                        model_schema=self.schema,
                     )
 
             elif func.__name__ in ['create', 'update']:
