@@ -70,13 +70,15 @@ class AsyncListService:
 
 @pytest.mark.asyncio
 async def test_paginate(mock_request_data, mock_response_data):
-    """ Paginate function handles correctly async rpc request """
+    """ Paginate function handles correctly async rpc request.
+
+    This test verifies that the paginate function in asynchronous rps mode
+    doesn't throw a "Model instance can't parse to dict without schema" error
+    when using a model schema.
+    """
     mock_request_data.return_value = {'limit': 10, 'offset': 0}
     mock_response_data.return_value = {'count': 2}
     request = message.Message()
     service = AsyncListService()
-    try:
-        await service.UserList(request, {})
-    except ValueError as e:
-        if str(e) == "Model instance can't parse to dict without schema":
-            pytest.fail(str(e))
+
+    await service.UserList(request, {})
