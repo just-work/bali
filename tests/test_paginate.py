@@ -81,4 +81,7 @@ async def test_paginate(mock_request_data, mock_response_data):
     request = message.Message()
     service = AsyncListService()
 
-    await service.UserList(request, {})
+    try:
+        await service.UserList(request, {})
+    except Exception as e:
+        pytest.fail(str(e))
